@@ -5,9 +5,11 @@ var express = require('express');
 
 var app = express();
 
-app.get('/', function (req, res) {
-  ADB.sms("Jacadi a dit: SMS envoyé");
-  res.send('done');
+app.get('/sms/:recipient/:message', function (req, res) {
+  console.log(req.params.recipient);
+  console.log(req.params.message);
+  ADB.sms(req.params.recipient, req.params.message);
+  res.send(req.params);
 });
 
 var server = app.listen(3000, function () {

@@ -13,8 +13,11 @@ var ADB = function(data) {
   exec("adb devices", io);
 };
 
-ADB.prototype.sms = function(message) {
-  exec("adb shell input keyevent 82 && adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text '" + message + "'", io);
+ADB.prototype.sms = function(recipient, message) {
+  exec("adb shell am start -a android.intent.action.SENDTO -d sms:" + recipient +  " --es sms_body '" + message + "' --ez exit_on_sent true", io);
+  exec("adb shell input keyevent 22");
+  exec("adb shell input keyevent 66");
+  exec("adb shell input keyevent 82 && adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text 'Omerxi a dit : SMS envoyé'", io);
 };
 
 module.exports = {
