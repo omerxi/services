@@ -1,10 +1,9 @@
 var exec = require('child_process').exec;
-var sys = require('sys');
 var colors = require('colors/safe');
 
 var io = function(error, stdout, stderr) {
-  sys.puts(colors.green(stdout));
-  sys.puts(colors.red(stderr));
+  console.log(colors.green(stdout));
+  console.log(colors.red(stderr));
 };
 
 var ADB = function(data) {
