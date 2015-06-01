@@ -1,5 +1,6 @@
-var exec = require('child_process').exec;
 var colors = require('colors/safe');
+var exec = require('child_process').exec;
+var execSync = require('exec-sync');
 
 var io = function(error, stdout, stderr) {
   console.log(colors.green(stdout));
@@ -13,13 +14,14 @@ var ADB = function(data) {
   exec("adb devices", io);
 };
 
-ADB.prototype.sms = function(recipient, message) {
-  exec("adb shell input keyevent 82", io);
-  exec("adb shell input keyevent 3", io);
-  exec("adb shell am start -a android.intent.action.SENDTO -d sms:" + recipient + " --es sms_body '" + message + "' --ez exit_on_sent true && adb shell input keyevent 22 && adb shell input keyevent 66", io);
-  //exec("adb shell input keyevent 22", io);
-  //exec("adb shell input keyevent 66", io);
-  //exec("adb shell input keyevent 82 && adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text 'Omerxi a dit : SMS envoyé'", io);
+var makeShellCommand = function(sms) {
+  return "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' -n 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
+};
+
+ADB.prototype.sms = function(sms) {
+  execSync(makeShellCommand(sms));
+  console.log(colors.green(sms));
+  exec("adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text 'Omerxi a dit : SMS envoyé'", io);
 };
 
 module.exports = {
