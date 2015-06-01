@@ -19,9 +19,10 @@ var makeShellCommand = function(sms) {
 };
 
 ADB.prototype.sms = function(sms) {
-  execSync(makeShellCommand(sms));
-  console.log(colors.green(sms));
-  exec("adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text 'Omerxi a dit : SMS envoyé'", io);
+  var command = makeShellCommand(sms);
+  console.log(colors.green(command));
+  execSync(command);
+  //exec("adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text 'Omerxi a dit : SMS envoyé'", io);
 };
 
 module.exports = {

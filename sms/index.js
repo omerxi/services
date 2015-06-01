@@ -26,7 +26,7 @@ var checkQueue = function() {
   });
 };
 
-setInterval(checkQueue(worker), 1000 * 10);
+setInterval(checkQueue, 1000 * 10);
 
 var app = express();
 
