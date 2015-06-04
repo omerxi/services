@@ -15,7 +15,8 @@ var ADB = function(data) {
 };
 
 var makeShellCommand = function(sms) {
-  return "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' -n 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
+  //return "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' -n 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
+  return "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
 };
 
 ADB.prototype.sms = function(sms) {
