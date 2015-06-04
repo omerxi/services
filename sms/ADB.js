@@ -1,6 +1,6 @@
 var colors = require('colors/safe');
 var exec = require('child_process').exec;
-var execSync = require('exec-sync');
+//var execSync = require('exec-sync');
 
 var io = function(error, stdout, stderr) {
   console.log(colors.green(stdout));
@@ -22,7 +22,7 @@ var makeShellCommand = function(sms) {
 ADB.prototype.sms = function(sms) {
   var command = makeShellCommand(sms);
   console.log(colors.green(command));
-  execSync(command);
+  exec(command);
   //exec("adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text 'Omerxi a dit : SMS envoyé'", io);
 };
 
