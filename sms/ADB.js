@@ -19,11 +19,10 @@ var makeShellCommand = function(sms) {
 };
 
 ADB.prototype.sms = function(sms) {
-  // TODO à revoir...
-  exec("adb shell dumpsys input_method | grep -Po 'mScreenOn=false' &> /dev/null; if [ $? == 0 ]; then adb shell input keyevent 26; fi");
+  exec("adb shell \"dumpsys input_method | grep -Po 'mScreenOn=false' &> /dev/null; if [ $? == 0 ]; then input keyevent 26; fi;\"", io);
   var command = makeShellCommand(sms);
   console.log(colors.green(command));
-  exec(command);
+  exec(command, io);
 };
 
 module.exports = {
