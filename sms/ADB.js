@@ -15,15 +15,14 @@ var ADB = function(data) {
 };
 
 var makeShellCommand = function(sms) {
-  //return "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' -n 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
-  return "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
+  return "adb shell dumpsys input_method | grep -Po 'mScreenOn=false' &> /dev/null; if [ $? == 0 ]; then adb shell input keyevent 26; fi" + " && "
+  "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
 };
 
 ADB.prototype.sms = function(sms) {
   var command = makeShellCommand(sms);
   console.log(colors.green(command));
   exec(command);
-  //exec("adb shell am start -n com.nolanlawson.android.simpletalker/.MainActivity -e text 'Omerxi a dit : SMS envoyé'", io);
 };
 
 module.exports = {
