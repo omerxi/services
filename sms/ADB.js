@@ -1,6 +1,5 @@
 var colors = require('colors/safe');
 var exec = require('child_process').exec;
-//var execSync = require('exec-sync');
 
 var io = function(error, stdout, stderr) {
   console.log(colors.green(stdout));
@@ -15,15 +14,19 @@ var ADB = function(data) {
 };
 
 var makeShellCommand = function(sms) {
-  return "adb shell \"am start -e recipient '" + sms.recipient + "' -e message '" + sms.message + "' 'com.example.tutorialspoint/.MainActivity' && input keyevent 20 && input keyevent 20 && input keyevent 66 && input keyevent 3\"";
+  var message = sms.message.replace(/'/, "\\'");
+  return 'adb shell "am start -n \'com.example.tutorialspoint/.MainActivity\' -e recipient ' + " '" + sms.recipient + "'" +
+    ' -e message ' + "$'" + message + "' && input keyevent 61 && input keyevent 61 && input keyevent 66 && input keyevent 3\"";
 };
 
 ADB.prototype.sms = function(sms) {
-  exec("adb shell \"dumpsys input_method | grep -Po 'mScreenOn=false' &> /dev/null; if [ $? == 0 ]; then input keyevent 26; fi;\"", io);
   var command = makeShellCommand(sms);
   console.log(colors.green(command));
+  //exec('adb shell "dumpsys input_method | grep -q \'mScreenOn=false\' && input keyevent 26;"', io);
   exec(command, io);
 };
+
+
 
 module.exports = {
   getInstance: function(data) {
