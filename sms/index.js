@@ -36,7 +36,8 @@ app.get('/sms/:recipient/:message', function(req, res) {
   res.send(req.params);
 });
 
-var server = app.listen(3000, function() {
+// TODO inject port
+var server = app.listen(5555, function() {
   var host = server.address().address;
   var port = server.address().port;
   console.log(colors.green('listening at http://%s:%s'), host, port);
